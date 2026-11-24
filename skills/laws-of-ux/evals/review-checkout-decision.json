@@ -1,0 +1,11 @@
+{
+  "id": "review-checkout-decision",
+  "skill": "laws-of-ux",
+  "scenario": "Review a checkout screen that shows six payment options, a promotional banner, and a disabled primary button with no explanation.",
+  "acceptanceCriteria": [
+    "The user goal and the interaction under review are named.",
+    "At most five laws are cited, and each cited law explains an observed issue.",
+    "Each issue states its mechanism and is ranked by user impact.",
+    "Each recommendation has a checkable acceptance criterion."
+  ]
+}

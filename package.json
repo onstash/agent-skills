@@ -1,0 +1,23 @@
+{
+  "name": "agent-skills",
+  "version": "0.0.0",
+  "private": true,
+  "type": "module",
+  "description": "Reusable agent skills for commits, pull requests, verification, and review.",
+  "scripts": {
+    "format": "oxfmt \"skills/**/SKILL.md\" \"skills/**/*.md\" \"scripts/**/*.mjs\" \"skills/**/scripts/**/*.mjs\"",
+    "format:check": "oxfmt --check README.md AGENTS.md \"skills/**/SKILL.md\" \"skills/**/*.md\" \"scripts/**/*.mjs\" \"skills/**/scripts/**/*.mjs\"",
+    "lint": "oxlint --deny-warnings scripts skills",
+    "test": "node --test \"skills/**/*.test.mjs\"",
+    "verify:skills": "node scripts/verify-skills.mjs",
+    "verify": "pnpm format:check && pnpm lint && pnpm test && pnpm verify:skills",
+    "prepare": "lefthook install"
+  },
+  "devDependencies": {
+    "@oxlint/plugins": "^1.87.0",
+    "lefthook": "^2.1.17",
+    "oxfmt": "^0.72.0",
+    "oxlint": "^1.87.0"
+  },
+  "packageManager": "pnpm@10.10.0"
+}

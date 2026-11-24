@@ -1,28 +1,39 @@
 ---
 name: ship-change-safely
-description: Coordinate a verified code change from worktree preparation through PR merge and final branch cleanup.
+description: Use when a code change must go from a clean worktree to a verified, merged pull request. Runs the other skills in order, stops at the first failed step, and reports only what command or GitHub output proves.
 ---
 
 # Ship a change safely
 
-Use this as the default coordinator for a code change.
+Run these skills in order. Stop at the first step that fails.
 
-## Workflow
+1. `prepare-worktree`. Record the starting state and create the branch.
+2. Confirm the scope before you edit:
+   - the files you will change;
+   - the base branch, from `git symbolic-ref --short refs/remotes/origin/HEAD`;
+   - the verify command, from the repository's AGENTS.md, then the `verify` script in `package.json`.
 
-1. Run `prepare-worktree`.
-2. Confirm the requested scope, base branch, and repository adapter.
-3. Implement the smallest change that satisfies the request.
-4. Run `implement-and-verify`.
-5. Run `commit-safely`.
-6. Run `create-or-update-pr`.
-7. Run `babysit-pr` until checks and review state are known.
-8. Run `merge-and-rebase` only when the user has authorized the merge.
-9. Report commands, checks, commit, PR, merge, and remaining uncertainty.
+   Stop and ask when the repository defines no verify command.
 
-Do not claim deployment, merge, or verification without command or provider evidence.
+   Why: the verify command is the only gate that proves the repository still works.
 
-## Repository boundary
+3. Make the smallest change that meets the request.
+4. `implement-and-verify`.
+5. `commit-safely`.
+6. `create-or-update-pr`.
+7. `babysit-pr`. Continue until every check and review state is known.
+8. `merge-and-rebase`, only when the user has authorized the merge of this PR. Otherwise, report the PR as ready to merge and stop.
 
-The workflow is portable. Repository adapters supply package commands, protected branches,
-deployment checks, and provider-specific policy. Never hard-code Life OS or Total Recall paths
-in this skill.
+## Report
+
+- Each command you ran, with its exit code.
+- The commit SHA and message.
+- The PR URL and head SHA.
+- The merge state from `gh pr view`, or "not merged: not authorized".
+- Anything you did not verify.
+
+## Rules
+
+- Never claim a merge, a deployment, or a passing check without command or GitHub output that shows it.
+- Never skip a step to save time. Report a skipped step as skipped, with the reason.
+- Repository settings, such as the verify command, the base branch, and protected branches, come from the repository's AGENTS.md. This skill does not define them.

@@ -1,0 +1,11 @@
+{
+  "id": "fresh-install-without-copy",
+  "skill": "install-anti-slop",
+  "scenario": "Install the anti-slop plugin in a repository that has no existing copy and already depends on oxlint.",
+  "acceptanceCriteria": [
+    "The repository's AGENTS.md and git status are read before any file is written.",
+    "@oxlint/plugins is installed at the exact oxlint version from the lockfile.",
+    "Existing ignores and rules are kept, and the generic rules are set to error.",
+    "UPSTREAM.md records the source identity or states that the revision is unknown."
+  ]
+}

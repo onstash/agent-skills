@@ -52,15 +52,15 @@ NIST separates the event sequence from the search for vulnerabilities, threats, 
 
 The report should therefore use these separate fields:
 
-| Field | Meaning | Typical evidence |
-| --- | --- | --- |
-| Impact | What users, systems, or business outcomes experienced | SLOs, customer metrics, data-loss counts |
-| Symptom | What was observable and triggered detection | User reports, black-box checks, alerts |
-| Trigger | The event that activated a latent weakness | Deployment, traffic spike, config change |
-| Contributing factor | A condition that increased likelihood or blast radius | Missing test, unsafe default, dependency behavior |
-| Systemic root cause | A defect whose repair materially reduces recurrence risk | Design, process, tooling, or control gap |
-| Mitigation | What reduced impact during the incident | Rollback, traffic shift, rate limit |
-| Unknown | A material question not established by evidence | Missing logs, untested alternative hypothesis |
+| Field               | Meaning                                                  | Typical evidence                                  |
+| ------------------- | -------------------------------------------------------- | ------------------------------------------------- |
+| Impact              | What users, systems, or business outcomes experienced    | SLOs, customer metrics, data-loss counts          |
+| Symptom             | What was observable and triggered detection              | User reports, black-box checks, alerts            |
+| Trigger             | The event that activated a latent weakness               | Deployment, traffic spike, config change          |
+| Contributing factor | A condition that increased likelihood or blast radius    | Missing test, unsafe default, dependency behavior |
+| Systemic root cause | A defect whose repair materially reduces recurrence risk | Design, process, tooling, or control gap          |
+| Mitigation          | What reduced impact during the incident                  | Rollback, traffic shift, rate limit               |
+| Unknown             | A material question not established by evidence          | Missing logs, untested alternative hypothesis     |
 
 This prevents “the database returned errors” from being reported as the root cause when it is only the symptom or an intermediate cause.
 
@@ -142,16 +142,16 @@ The agent should describe decisions in context: what the responder knew, what th
 
 The boundary should follow repeatability and risk. Google and AWS both recommend automating common or well-understood response work, while Google’s troubleshooting guidance requires hypothesis testing and judgment. AWS CloudWatch describes AI findings as starting points that need human verification. ([Google Incident Management Guide](https://sre.google/resources/practices-and-processes/incident-management-guide/); [AWS Operate](https://docs.aws.amazon.com/wellarchitected/latest/operational-excellence-pillar/operate.html); [Google SRE effective troubleshooting](https://sre.google/sre-book/effective-troubleshooting/); [AWS CloudWatch AI-derived facts](https://docs.aws.amazon.com/AmazonCloudWatch/latest/monitoring/Investigations-IncidentReports-ai-facts.html))
 
-| Deterministic scripts should do | Agent reasoning should do | Required boundary |
-| --- | --- | --- |
-| Fetch allowed logs, metrics, deploys, tickets, chat exports, and runbook records | Decide which sources are relevant and what is still missing | Never invent a source or silently discard a conflict |
-| Normalize timestamps, time zones, IDs, and units | Reconcile conflicting observations and explain the uncertainty | Preserve raw values and the transformation |
-| Extract event candidates and calculate detection, mitigation, resolution, and recovery durations | Decide which events changed the causal story | Link every important event to evidence |
-| Preserve artifacts, hashes, provenance, queries, and command output | Judge whether evidence supports a causal edge | Mark correlation as correlation until tested |
-| Validate required report fields and action-item fields | Separate symptom, trigger, contributor, systemic cause, and unknown | Allow multiple causes and branches |
-| Create or update tracking records only when authorized | Propose actions and rank prevention, detection, mitigation, and preparedness options | Do not execute impactful changes from an unverified hypothesis |
-| Run regression tests, alert tests, canaries, failure exercises, and post-change checks | Interpret whether the proof addresses recurrence risk and residual risk | Record pass, fail, scope, and limitations |
-| Check that action owners, status, due dates, and proof artifacts exist | Write a clear, blameless narrative for review | Human review remains the approval boundary |
+| Deterministic scripts should do                                                                  | Agent reasoning should do                                                            | Required boundary                                              |
+| ------------------------------------------------------------------------------------------------ | ------------------------------------------------------------------------------------ | -------------------------------------------------------------- |
+| Fetch allowed logs, metrics, deploys, tickets, chat exports, and runbook records                 | Decide which sources are relevant and what is still missing                          | Never invent a source or silently discard a conflict           |
+| Normalize timestamps, time zones, IDs, and units                                                 | Reconcile conflicting observations and explain the uncertainty                       | Preserve raw values and the transformation                     |
+| Extract event candidates and calculate detection, mitigation, resolution, and recovery durations | Decide which events changed the causal story                                         | Link every important event to evidence                         |
+| Preserve artifacts, hashes, provenance, queries, and command output                              | Judge whether evidence supports a causal edge                                        | Mark correlation as correlation until tested                   |
+| Validate required report fields and action-item fields                                           | Separate symptom, trigger, contributor, systemic cause, and unknown                  | Allow multiple causes and branches                             |
+| Create or update tracking records only when authorized                                           | Propose actions and rank prevention, detection, mitigation, and preparedness options | Do not execute impactful changes from an unverified hypothesis |
+| Run regression tests, alert tests, canaries, failure exercises, and post-change checks           | Interpret whether the proof addresses recurrence risk and residual risk              | Record pass, fail, scope, and limitations                      |
+| Check that action owners, status, due dates, and proof artifacts exist                           | Write a clear, blameless narrative for review                                        | Human review remains the approval boundary                     |
 
 **Design inference:** Scripts should enforce evidence and completeness; the agent should produce competing explanations, make uncertainty visible, and propose the smallest useful next test. The agent may draft conclusions, but it should not convert a hypothesis into a production change merely because the narrative sounds coherent.
 

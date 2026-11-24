@@ -1,0 +1,8 @@
+{
+  "$schema": "https://raw.githubusercontent.com/oxc-project/oxc-project.github.io/main/schemas/oxlint.schema.json",
+  "ignorePatterns": ["**/node_modules/**"],
+  "rules": {
+    "no-unused-vars": "error",
+    "no-unreachable": "error"
+  }
+}

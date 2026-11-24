@@ -1,0 +1,14 @@
+pre-commit:
+  parallel: true
+  commands:
+    format:
+      glob: "*.{md,mjs}"
+      run: pnpm exec oxfmt --check {staged_files}
+    lint:
+      glob: "*.mjs"
+      run: pnpm exec oxlint --deny-warnings {staged_files}
+
+commit-msg:
+  commands:
+    conventional-commit:
+      run: node skills/conventional-commit/scripts/verify-commit-message.mjs --file {1}
